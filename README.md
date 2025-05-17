@@ -1,111 +1,40 @@
 # GenPilot \[[Paper]()]
 
 <div align="center">
-  <img src="assets/model.jpg">
+  <img src="assets/pipline_3_final.jpg">
 </div>
 
+<div align="center">
+  <img src="assets/show_case_5.jpg">
+</div>
 ## 🌟 Highlights
-- 📚 A 3D generative model based on diffusion models with multimodal transformers that learns the joint distribution in latent space over all modalities.
-- 🚤 An modality inpainting method filling randomly missing modalities and generating semantically coherent and high-resolution images efficiently without training and resampling steps.
-- 🏆 Experiments on BraTs 2018, BraTs 2019 and BraTs 2021 outperform other methods.
+- 📚 We introduce the GenPilot, a plug-and-play multi-agent system that introduces test time scaling directly on the input prompt space for enhanced image generation, and process without any training phase, and can be broadly applied to diverse T2I models.
+- 🚤 GenPilot enables precise error detection and localization via an integrated analysis strategy. A clustering-based candidate selection mechanism with posterior updates and a memory module further enhance image quality and text-image alignment by leveraging feedback across iterations.
+- 🏆 Experiments on GenEval and DPG-bench outperform other methods.
 
 ## 🔨 Usage
-### Training
-To train the DiffM4RI model on your own data, follow these steps:
-#### 1. **Prepare Your Training Data**:
-Ensure that your training data is split according to its modality. The target file structures should be like the following:
+### environment
+Please refer to the requirements.txt file for setting up the environment.
 ```
-data
- ├── FLAIR
- │ ├── BraTS2021_00621_flair.nii.gz
- │ ├── ...
- ├── T1
- │ ├── BraTS2021_00621_t1.nii.gz
- │ ├── ...
- ├── T1ce
- │ ├── BraTS2021_00621_t1ce.nii.gz
- │ ├── ...
- ├── T2
- │ ├── BraTS2021_00621_t2.nii.gz
- │ ├── ...
- ├── ...
+conda create -n genpilot python==3.12
+conda activate genpilot
+pip install -r requirements.txt
 ```
-Then, modify the `path` in `vqvae/train.py` according to your own data.
+#### 1. **Prepare Your Data**:
+Please write the initial prompts sequentially, one prompt per line, into a .txt file named ```original_prompts.txt```. This file should be placed in the input_folder directory.
+
+Additionally, prepare a .txt file for case IDs. For example, if you have IDs 0, 1, 2, and 3, create a file named ```0_3.txt```. This file should list these IDs, with each ID on a new line.
+
+#### 2. **Run the Error Analysis**: 
 ```
-path = "../data/t1"
+bash ./error_analysis_pipline.sh
+```
+Please edit the information in this .sh to adjust to your models.
+
+#### 3. **Run the Test-Time Prompt Optimization**: 
+```
+python ttpo.py --case_id test/0_1.txt --cuda cuda:3 --input_folder test --output_folder test --model_name [image generation model name in FLUX, sd1, sd2, sd3] --model_path [image model path] --api_key [api_key] --url [base_url] --api_model [api_model name]
 ```
 
-#### 2. **Run the Training Script of 3D VQVAE for each modality**: 
-Run `train.py` to execute the following command in your terminal:
-
-```
-cd vqvae
-python train.py
-```
-This will start the training process of the 3DVQVAE model on your prepared data.
-
-#### 3. **Run the latent representation Script of 3D VQVAE to get the latents of each modality**: 
-Modify the `path` and `ckpt_path` in `vqvae/train.py` according to your own data and checkpoint.
-```
-ckpt_path = './results/t2.pth'
-path="../data/t2"
-```
-Run `test.py` to execute the following command in your terminal:
-```
-cd vqvae
-python test.py
-```
-
-#### 4. **Prepare multimodal Data for diffusion**: 
-With a series of .npy folders, you can place them in a whole folders following structures below:
-```
-data
- ├── FLAIR
- │ ├── BraTS2021_00621.npy
- │ ├── ...
- ├── T1
- │ ├── BraTS2021_00621.npy
- │ ├── ...
- ├── T1ce
- │ ├── BraTS2021_00621.npy
- │ ├── ...
- ├── T2
- │ ├── BraTS2021_00621.npy
- │ ├── ...
- ├── ...
-```
-Modify the `source_folder` in `diff/data_operation.py` according to your own data.
-Run `data_operation.py` to execute the following command in your terminal:
-```
-cd diff
-python data_operation.py
-```
-After run `data_operation.py`, you will get:
-```
-npy_data
- ├── BraTS2021_00621.npy
- ├── BraTS2021_00622.npy
- ├── ...
-```
-
-#### 5. **Train diffusion**: 
-Run `train.py` to execute the following command in your terminal:
-
-```
-cd diff
-torchrun train.py
-```
-This will start the training process of the diffusion model on your prepared data.
-
-#### 6. **Generation**: 
-Run `sample.ipynb` to generate images.
-
-#### 7. **Modality Inpainting**: 
-Run `inpaint.py` to generate images.
-```
-cd diff
-python  inpaint.py
-```
-
-## 🔗 Checkpoint
-checkpoints are available with these links: [Baidu NetDisk Download (pwd:dm4r)](https://pan.baidu.com/s/11VvF0_8rhvq7PYBv5q4enA?pwd=dm4r) and [Google Drive]()
+## 🔗 Data
+Patterns are available in the ```patterns.json```
