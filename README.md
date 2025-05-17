@@ -1,12 +1,9 @@
 # GenPilot \[[Paper]()]
-## Models
+
 <div align="center">
   <img src="assets/pipline_3_final.jpg">
 </div>
-## Examples
-<div align="center">
-  <img src="assets/show_case_5.jpg">
-</div>
+
 ## 🌟 Highlights
 - 📚 We introduce the GenPilot, a plug-and-play multi-agent system that introduces test time scaling directly on the input prompt space for enhanced image generation, and process without any training phase, and can be broadly applied to diverse T2I models.
 - 🚤 GenPilot enables precise error detection and localization via an integrated analysis strategy. A clustering-based candidate selection mechanism with posterior updates and a memory module further enhance image quality and text-image alignment by leveraging feedback across iterations.
@@ -38,3 +35,8 @@ python ttpo.py --case_id test/0_1.txt --cuda cuda:3 --input_folder test --output
 
 ## 🔗 Data
 Patterns are available in the ```patterns.json```
+
+## Examples
+<div align="center">
+  <img src="assets/show_case_5.jpg">
+</div>
