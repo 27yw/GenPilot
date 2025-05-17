@@ -2,16 +2,16 @@
 
 # 公共参数
 API_KEY="EMPTY"
-BASE_URL="http://localhost:28088/v1"
-API_MODEL="/data/home/zdhs0024/models/Qwen/Qwen2-VL-72B-Instruct"
+BASE_URL=""
+API_MODEL=""
 CUDA_DEVICE="cuda:3"
-MODEL_NAME="sd1"
-MODEL_PATH="/data/yewen/models/CompVis/stable-diffusion-v1-4"  # 假设模型保存在这个路径
+MODEL_NAME=""
+MODEL_PATH=""  # 假设模型保存在这个路径
 
 
-INPUT_FOLDER="/data/yewen/GenPilot/test"
-OUTPUT_FOLDER="/data/yewen/GenPilot/test"
-OUTPUT_IMG_FOLDER="/data/yewen/GenPilot/test/ori_img"
+INPUT_FOLDER=""
+OUTPUT_FOLDER=""
+OUTPUT_IMG_FOLDER=""
 # 确保输出目录存在
 mkdir -p "$OUTPUT_FOLDER" "$OUTPUT_IMG_FOLDER"
 
