@@ -1,9 +1,9 @@
 # GenPilot \[[Paper]()]
-
+## Models
 <div align="center">
   <img src="assets/pipline_3_final.jpg">
 </div>
-##
+## Examples
 <div align="center">
   <img src="assets/show_case_5.jpg">
 </div>
