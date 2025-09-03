@@ -14,8 +14,10 @@ import os
 import importlib
 def load_model_module(name):
     if name == "flux":
-        module_name = "utils_all.Image_flux"
+        module_name = "utils_all.image_flux"
     elif name in ["sd1", "sd2", "sd3"]:
+        module_name = f"utils_all.image_{name}"
+    elif name == "sana":
         module_name = f"utils_all.image_{name}"
     else:
         raise ValueError(f"Unknown model name: {name}")
