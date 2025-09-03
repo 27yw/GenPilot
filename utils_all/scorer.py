@@ -135,6 +135,20 @@ def rate(client,prompt_before, error_before, propmpt_after, error_after, img, te
     print("Max retries reached, returning None")
     return None  # 达到最大重试次数，返回 None
 
+def safe_to_int(val):
+    """将值安全地转为 int，根据类型处理"""
+    if isinstance(val, int):
+        return val
+    elif isinstance(val, str):
+        return int(val)
+    elif isinstance(val, list):
+        if len(val) > 0:
+            return int(val[0])
+        else:
+            return int(str(val))
+    else:
+        raise TypeError(f"无法转换类型为 {type(val)} 的值：{val}")
+    
 def avg_rate(client,rate_list,template):
     final_result = {
         "scores" : {
@@ -160,9 +174,10 @@ def avg_rate(client,rate_list,template):
     }
 
     for rate_i in rate_list:
-        final_result["scores"]["Attribute-Binding"].append(int(rate_i["scores"]["Attribute-Binding"]))
-        final_result["scores"]["Object-Relationship"].append(int(rate_i["scores"]["Object-Relationship"]))
-        final_result["scores"]["Background-Consistency"].append(int(rate_i["scores"]["Background-Consistency"]))
+        print(rate_i["scores"]["Attribute-Binding"])
+        final_result["scores"]["Attribute-Binding"].append(safe_to_int(rate_i["scores"]["Attribute-Binding"]))
+        final_result["scores"]["Object-Relationship"].append(safe_to_int(rate_i["scores"]["Object-Relationship"]))
+        final_result["scores"]["Background-Consistency"].append(safe_to_int(rate_i["scores"]["Background-Consistency"]))
         final_result["reasons"]["Attribute-Binding"].append(rate_i["reasons"]["Attribute-Binding"])
         final_result["reasons"]["Object-Relationship"].append(rate_i["reasons"]["Object-Relationship"])
         final_result["reasons"]["Background-Consistency"].append(rate_i["reasons"]["Background-Consistency"])

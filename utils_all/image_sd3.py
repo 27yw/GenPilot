@@ -5,7 +5,7 @@ import torch
 import hashlib
 import random
 from io import BytesIO
-from diffusers import StableDiffusionPipeline
+from diffusers import StableDiffusion3Pipeline
 import os
 import requests
 import openai
@@ -13,7 +13,7 @@ from PIL import Image
 import io
 
 def get_pipe_slow(model_path,cuda="cuda:0"):
-    pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16,local_files_only=True)
+    pipe = StableDiffusion3Pipeline.from_pretrained(model_path, torch_dtype=torch.float16,local_files_only=True)
     pipe = pipe.to(cuda)
 
     return pipe
