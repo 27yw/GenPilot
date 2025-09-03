@@ -13,7 +13,7 @@
 ### environment
 Please refer to the requirements.txt file for setting up the environment.
 ```
-conda create -n genpilot python==3.12
+conda create -n genpilot python=3.12
 conda activate genpilot
 pip install -r requirements.txt
 ```
