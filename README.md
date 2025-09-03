@@ -1,4 +1,4 @@
-# GenPilot \[[Paper]()] EMNLP 2025 Findings
+# GenPilot: A Multi-Agent System for Test-Time Prompt Optimization in Image Generation \[[EMNLP 2025 Findings]()]
 
 <div align="center">
   <img src="assets/pipline_3_final.jpg">
