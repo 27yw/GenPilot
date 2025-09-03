@@ -78,7 +78,7 @@ def match_image_with_text(image_folder, caption_file, prompt_file):
 
 def load_model_module(name):
     if name == "flux":
-        module_name = "utils_all.Image_flux"
+        module_name = "utils_all.image_flux"
     elif name in ["sd1", "sd2", "sd3"]:
         module_name = f"utils_all.image_{name}"
     else:
@@ -345,20 +345,22 @@ if __name__ == '__main__':
     generate_img = True
     rate_flag = True
     delta_revise = False
-    num_gen_img = 3
+    num_gen_img = 1
     use_history = False
     num_4_select_prompt = 3
     results = []
     # 迭代次数
-    num_iterations = 3
+    num_iterations = 10
     # 每次生成的候选 prompts 数量
-    num_candidates = 7
+    num_candidates = 20
     # 聚类数量
-    num_clusters = 3
-    # 初始先验概率
+    num_clusters = 5
+    
+    print(f"========================num_4_select_prompt:{num_4_select_prompt},num_iterations:{num_iterations},num_candidates:{num_candidates},num_clusters:{num_clusters}============================")
     prior_probabilities = [1 / num_clusters] * num_clusters
     prompt_refined = {}
     results = []
+    start_now = datetime.now()
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         futures = {executor.submit(process_case, i, txt_ori[i],prior_probabilities): i for i in data_num}
         with tqdm(total=len(futures), desc="Processing Cases", unit="case") as pbar:
@@ -380,4 +382,6 @@ if __name__ == '__main__':
     with open(output_prompt_merged_file_json, "w", encoding="utf-8") as file:
         json.dump(json_data, file, ensure_ascii=False, indent=4)
     logger_print_txt(log_file_after,f"log in {log_file_all}")
+    end_now = datetime.now()
+    print(f"start at {start_now.strftime("%Y-%m-%d %H:%M:%S")} and end at {end_now.strftime("%Y-%m-%d %H:%M:%S")}")
 
