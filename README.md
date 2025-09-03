@@ -1,4 +1,4 @@
-# GenPilot \[[Paper]()]
+# GenPilot \[[Paper]()] EMNLP 2025 Findings
 
 <div align="center">
   <img src="assets/pipline_3_final.jpg">
